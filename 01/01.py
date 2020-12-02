@@ -46,3 +46,17 @@ def part2_sweet(input, year=2020):
 
 print(part1_sweet(content))
 print(part2_sweet(content))
+
+def part1_sweet_home_comprehensions(input, year=2020):
+    
+    int_list = list(map(int,input))
+    list_comprh_solution = [num*num2 for num in int_list for num2 in int_list if num+num2 == year]
+    return list_comprh_solution[0]
+
+def part2_sweet_home_comprehensions(input, year=2020):
+    int_list = list(map(int, input))
+    list_comprh_solution = [num * num2 * num3 for num in int_list for num2 in int_list for num3 in int_list if num + num2 + num3 == year]
+    return list_comprh_solution[0]
+
+print(part1_sweet_home_comprehensions(content))
+print(part2_sweet_home_comprehensions(content))
