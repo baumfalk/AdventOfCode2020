@@ -1,16 +1,6 @@
-import time
-from collections import defaultdict, Counter
-from copy import deepcopy
-import numpy as np
-from itertools import permutations
-
-
 content = list(map(lambda s: s.strip('\r\n'), open("input.txt").readlines()))
 content_parsed = list(map(lambda s: s.split(" "), content))
 content_parsed = list(map(lambda t: ((int(t[0].split("-")[0]),int(t[0].split("-")[1])), t[1][:1], t[2]), content_parsed))
-
-print(content_parsed)
-
 
 def part1(content_parsed):
     count = 0
@@ -23,7 +13,7 @@ def part1(content_parsed):
     return count
 
 
-def part2(input):
+def part2(content_parsed):
     count = 0
     for row in content_parsed:
         rang, char, string = row
