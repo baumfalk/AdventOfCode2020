@@ -1,6 +1,8 @@
 import time
 from collections import defaultdict, Counter
 from copy import deepcopy
+from functools import reduce
+
 import numpy as np
 from itertools import permutations
 
@@ -40,7 +42,6 @@ def part2(input):
             x_pos = (x_pos + x_delta) % len(input[0])
             y_pos += y_delta
         tree_count_list.append(tree_count)
-
-    return np.prod(tree_count_list), tree_count_list
+    return reduce(lambda x, y: x*y, tree_count_list), tree_count_list
 print(part1(content))
 print(part2(content))
