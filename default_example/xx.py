@@ -9,7 +9,7 @@ content = list(map(lambda s: s.strip('\r\n'), open("input.txt").readlines()))
 
 
 def part1(input):
-   pass
+    pass
 
 
 def part2(input):
