@@ -22,17 +22,18 @@ def part1(input):
     
     return counts[0] * counts[1]
 
-def calc_possible_routes(current_index, output_index,num_paths, srted):
-    if current_index == output_index:
+def calc_possible_routes(current_val, output_val, num_paths, srted):
+    if current_val == output_val:
         return 1
-    if current_index in num_paths:
-        return num_paths[current_index]
+    if current_val in num_paths:
+        return num_paths[current_val]
     
     route_length = 0
-    for middle_index in range(current_index+1, len(srted)):
-        if srted[middle_index]-srted[current_index] <= 3:
-            route_length += calc_possible_routes(middle_index, output_index, num_paths, srted)
-    num_paths[current_index] = route_length
+    for middle_val in srted:
+        diff = middle_val - current_val
+        if 1 <= diff <= 3:
+            route_length += calc_possible_routes(middle_val, output_val, num_paths, srted)
+    num_paths[current_val] = route_length
     return route_length
 
 def part2(input):
@@ -41,7 +42,7 @@ def part2(input):
     built_in_adapter = [srted[-1] + 3]
     srted = charging_outlet + srted + built_in_adapter
     num_paths = dict()
-    output = calc_possible_routes(0, len(srted)-1, num_paths, srted)
+    output = calc_possible_routes(srted[0], srted[-1], num_paths, srted)
     
     return output
 
