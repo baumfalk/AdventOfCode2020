@@ -43,7 +43,9 @@ def part2(input):
     srted = charging_outlet + srted + built_in_adapter
     num_paths = dict()
     output = calc_possible_routes(srted[0], srted[-1], num_paths, srted)
-    
+    arrange = [1] + [0] * srted[-1]
+    for i in srted[1:]: arrange[i] = arrange[i - 3] + arrange[i - 2] + arrange[i - 1]
+    print(arrange[-1])
     return output
 
 print(part1(content))
