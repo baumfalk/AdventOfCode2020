@@ -71,62 +71,42 @@ def part1(input):
     grid = input
     prev_grid = None
     cur_round = 1
-    print_grid(grid, cur_round)
+    #print_grid(grid, cur_round)
     while prev_grid != grid:
         cur_round += 1
         prev_grid = grid
         grid = next_state_grid(grid)
-        print_grid(grid, cur_round)
+        #print_grid(grid, cur_round)
     return count_occupied_seats(grid)
     
 
 
 def part2(input):
     grid = input
-    def get_neighbor_indice_ranges(row_i, col_i, max_col, max_row, min_col=0, min_row=0):
-        neighbor_indices = [[(row_i + dist*row_delta, col_i + dist*col_delta) for dist in range(1, max(max_row, max_col))] for col_delta in (-1, 0, 1) for row_delta in
+    def get_neighbor_deltas(row_i, col_i, min_col=0, min_row=0, max_col=1e999, max_row=1e999):
+        neighbor_indices = [(row_delta, col_delta) for col_delta in (-1, 0, 1) for row_delta in
                             (-1, 0, 1) if not (row_delta == 0 and col_delta == 0)]
-
-        def pos_is_within_grid(row_i, col_i):
-            col_within_grid = (min_col <= col_i < max_col)
-            row_within_grid = (min_row <= row_i < max_row)
-            return col_within_grid and row_within_grid
-
-        neighbor_indices = [[(row_i, col_i) for row_i, col_i in indice_range if pos_is_within_grid(row_i, col_i)] for indice_range in neighbor_indices ]
         return neighbor_indices
-    
-    def get_nearest_chair_for_indice_range(indice_range, grid):
-        for row_i, col_i in indice_range:
-            cell = grid[row_i][col_i]
-            if cell != ".":
-                return cell
-        return None
     
     def get_nearest_chair_for_vector(row_i, col_i, row_delta, col_delta, grid):
         dist = 1
         while True:
             try:
-                cell = grid[row_i + row_delta * dist][col_i * col_delta * dist]
+                neighbor_row_i = row_i + row_delta * dist
+                neighbor_col_i = col_i + col_delta * dist
+                if neighbor_col_i < 0 or neighbor_row_i < 0:
+                    return None
+                
+                cell = grid[neighbor_row_i][neighbor_col_i]
                 if cell != ".":
                     return cell
+                dist += 1
             except Exception:
                 return None
             
-    def get_neighbor_indices(row_i, col_i, min_col=0, min_row=0, max_col=1e999, max_row=1e999):
-        neighbor_indices = [(row_i + row_delta, col_i + col_delta) for col_delta in (-1, 0, 1) for row_delta in
-                            (-1, 0, 1) if not (row_delta == 0 and col_delta == 0)]
-
-        def pos_is_within_grid(row_i, col_i):
-            col_within_grid = (min_col <= col_i < max_col)
-            row_within_grid = (min_row <= row_i < max_row)
-            return col_within_grid and row_within_grid
-
-        neighbor_indices = [(row_i, col_i) for row_i, col_i in neighbor_indices if pos_is_within_grid(row_i, col_i)]
-        return neighbor_indices
-
     def get_nearest_chairs(row_i, col_i, grid):
-        deltas = get_neighbor_indices(row_i, col_i, max_row=len(grid), max_col=len(grid[0]))
-        return [get_nearest_chair_for_vector(row_i, col_i, row_delta, col_delta) for row_delta, col_delta in deltas]
+        deltas = get_neighbor_deltas(row_i, col_i, max_row=len(grid), max_col=len(grid[0]))
+        return [get_nearest_chair_for_vector(row_i, col_i, row_delta, col_delta, grid) for row_delta, col_delta in deltas]
 
     def next_state_cell(row_i, col_i, grid):
         cell = grid[row_i][col_i]
@@ -134,8 +114,8 @@ def part2(input):
         seat_is_occupied = cell == "#"
         if cell_is_empty: return cell
 
-        neighbor_indice_ranges = get_neighbor_indice_ranges(row_i, col_i, max_col=len(grid[0]), max_row=len(grid), )  
-        neighbor_cells = [get_nearest_chair_for_indice_range(indice_range, grid) for indice_range in neighbor_indice_ranges]
+        neighbor_cells = get_nearest_chairs(row_i, col_i, grid)
+        
         num_occupied_neighbor_seats = len([cell for cell in neighbor_cells if cell == "#"])
 
         # If a seat is empty (L) and there are no occupied seats adjacent to it, the seat becomes occupied.
@@ -162,11 +142,11 @@ def part2(input):
     cur_round = 1
     #print_grid(grid, cur_round)
     while prev_grid != grid:
-        print(cur_round)
+        #print(cur_round)
         cur_round += 1
         prev_grid = grid
         grid = next_state_grid(grid)
         #print_grid(grid, cur_round)
     return count_occupied_seats(grid)
-#print(part1(content))
+print(part1(content))
 print(part2(content))
