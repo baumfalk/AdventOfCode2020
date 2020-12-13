@@ -1,0 +1,43 @@
+t
+stt
+
+d_0 departs at t (i.e. t % d_0 == 0)
+d_1 departs at t+1 (i.e. (t+1) % d_1 == 0)
+
+
+
+(x+1) = n*m
+x = n*m - 1
+
+
+
+t % d_0 == 0
+t % d_1 == 1
+t % d_n == n
+
+
+stel n is 'pseudo'deelbaar door d_0, d1, maar niet door d_2
+dan is het volgende nummer wat wel deelbaar is door d_0 en d_1
+
+
+100072469992435 
+
+stel n is deelbaar door iets
+
+
+n*17 == (m*13)-2
+
+17 % 13 == 4
+
+---------
+
+Stel 17 offset 0 en 13 offset 2
+17 % 13 == 4, geen offset 2. Hoger maakt de offset ook alleen maar hoger, dus (13-(4-2)) = 11 erbij
+
+Echter, er moet ook weer mnimaal 17 bij om het ff lekker te krijgen voor de 17. Maar dat is netto weer +4 bij de offset voor 13, die wordt dam +8
+34 % 13 == 8. Nog eens 17 erbij geeft offset 12, nog eens offset 3, 7, 11, 2 !!! Dus 7x in totaal verhogen (inclusief de eerste 17), geeft 
+7*17 = 119. 119 % 13 = 2. Maar hoe kunnen we dat in een keer berekenen?
+
+17 % 13 = 4
+n*4 % 13 == 2
+

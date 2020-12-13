@@ -102,8 +102,8 @@ point.y = y2 + center.y;"""
             new_waypoint_x = way_point_x_old * math.cos(radians) - way_point_y_old * math.sin(radians)
             new_waypoint_y = way_point_x_old * math.sin(radians) + way_point_y_old * math.cos(radians)
 
-            way_point_x = int(round(new_waypoint_x))
-            way_point_y = int(round(new_waypoint_y))
+            way_point_x = new_waypoint_x
+            way_point_y = new_waypoint_y
         elif instr == "L":
             way_point_x_old = way_point_x
             way_point_y_old = way_point_y
@@ -111,9 +111,9 @@ point.y = y2 + center.y;"""
             new_waypoint_x = way_point_x_old * math.cos(radians) - way_point_y_old * math.sin(radians)
             new_waypoint_y = way_point_x_old * math.sin(radians) + way_point_y_old * math.cos(radians)
 
-            way_point_x = int(round(new_waypoint_x))
-            way_point_y = int(round(new_waypoint_y))
-    return abs(pos_x) + abs(pos_y), pos_x, pos_y
+            way_point_x = new_waypoint_x
+            way_point_y = new_waypoint_y
+    return int(abs(pos_x) + abs(pos_y)), pos_x, pos_y
 
 print(part1(content))
 print(part2(content))
