@@ -5,6 +5,8 @@ import numpy as np
 from itertools import permutations
 import math
 # complex*i to rotate left/ccw, complex*-i to rotate right/cw
+from sympy.ntheory.modular import crt
+
 x = 0+0j
 direction = 1+0j
 # if command == 'L':
@@ -46,11 +48,13 @@ def part2(input):
             conditions.append((int(bus_time), offset))
     
     conditions=sorted(conditions,reverse=True)
-
+    n, a = zip(*conditions)
+    a = [-num for num in a]
     for bus_time, offset in conditions:
         print(f"(t + {offset}) mod {bus_time} = 0", end=", ")
     print()
-                        
+    print(crt(n,a))
+
     return conditions
 print(part1(content))
 print(part2(content))
