@@ -47,14 +47,24 @@ def part2(input):
         else:
             conditions.append((int(bus_time), offset))
     
-    conditions=sorted(conditions,reverse=True)
+    conditions=sorted(conditions,key=lambda x: -x[1])
     n, a = zip(*conditions)
     a = [-num for num in a]
     for bus_time, offset in conditions:
         print(f"(t + {offset}) mod {bus_time} = 0", end=", ")
     print()
     print(crt(n,a))
-
-    return conditions
+    
+    cur_num = -conditions[0][1] # initial offset
+    increase = conditions[0][0]
+    for bus_time, offset in conditions[1:]:
+        rest = (cur_num + offset) % bus_time
+        not_done = rest != 0
+        while not_done:
+            cur_num += increase
+            rest = (cur_num + offset) % bus_time
+            not_done = rest != 0
+        increase *= bus_time
+    return cur_num
 print(part1(content))
 print(part2(content))
